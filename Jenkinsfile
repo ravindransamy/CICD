@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'dev',
-                    credentialsId: 'github-pat',
-                    url: 'https://github.com/ravindransamy/CICD.git'
+                echo 'Checking out source code'
+                checkout scm
             }
         }
 
         stage('Deploy') {
             steps {
+                echo 'Deploying files to C:\\deploy'
                 bat '''
                 if not exist C:\\deploy mkdir C:\\deploy
-                xcopy /E /Y index.html C:\\deploy
+                xcopy /E /Y /I *.html C:\\deploy
                 '''
             }
         }
