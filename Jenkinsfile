@@ -2,19 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Test Echo') {
             steps {
-                echo 'Checking out source code'
-                checkout scm
+                echo 'HELLO FROM JENKINS PIPELINE'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploying files to C:\\deploy'
                 bat '''
+                echo Deploying...
                 if not exist C:\\deploy mkdir C:\\deploy
-                xcopy /E /Y /I *.html C:\\deploy
+                echo Jenkins was here > C:\\deploy\\jenkins.txt
                 '''
             }
         }
