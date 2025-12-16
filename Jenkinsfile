@@ -2,18 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Test Echo') {
+        stage('Checkout') {
             steps {
-                echo 'HELLO FROM JENKINS PIPELINE'
+                git branch: 'dev',
+                    credentialsId: 'github-pat',
+                    url: 'https://github.com/ravindransamy/CICD.git'
             }
         }
 
         stage('Deploy') {
             steps {
-                bat '''
-                echo Deploying...
-                if not exist C:\\deploy mkdir C:\\deploy
-                echo Jenkins was here > C:\\deploy\\jenkins.txt
+                sh '''
+                mkdir -p /var/jenkins_home/deploy
+                cp index.html /var/jenkins_home/deploy/
                 '''
             }
         }
